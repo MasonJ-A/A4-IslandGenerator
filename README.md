@@ -72,7 +72,7 @@ Called after java -jar island/island.jar:
   
   Biomes/Whittaker Diagrams:
     input `-temperature` to select average temperature type followed `cold`, `mild`, or `hot` afterwards. The default is `mild`
-    input `-percipitation` to select average percipitation type followed by `dry`, `temperate`, or `tropical`. the default is `temperate`
+    input `-precipitation` to select average precipitation type followed by `dry`, `temperate`, or `tropical`. the default is `temperate`
 
   Altitude:
     input `-altitude` sets the type of altitude the user wants (for example `canyon`, `volcano`, `arctic`, `random`)

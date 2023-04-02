@@ -10,7 +10,7 @@ public class Configuration {
     public static final String SHAPE = "s";
     public static final String ALTITUDE = "altitude";
     public static final String TEMPERATURE = "temperature";
-    public static final String PERCIPITATION = "percipitation";
+    public static final String PERCIPITATION = "precipitation";
     public static final String LAKENUMBER = "numOfLakes";
     public static final String AQUIFERNUMBER = "numOfAquifer";
     public static final String RIVERNUMBER = "numOfRivers";
