@@ -1,4 +1,4 @@
-package io.github.ace;
+package ca.mcmaster.pathfinder;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

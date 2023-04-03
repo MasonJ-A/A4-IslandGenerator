@@ -1,10 +1,10 @@
-package io.github.ace;
+package ca.mcmaster.pathfinder;
 
 /**
  * Hello world!
  *
  */
-public class Main 
+public class App 
 {
     public static void main( String[] args )
     {
