@@ -28,10 +28,38 @@ public class GraphPathfinder implements pathfinder{
         return weightMap;
     }
     @Override
-    public HashMap<Graph<Vertex>.Node, Double> shortestPath(Graph<Vertex> G, Graph<Vertex>.Node N){
+    public HashMap<Graph<Vertex>.Node, Graph<Vertex>.Node> shortestPathDijksra(Graph<Vertex> G, Graph<Vertex>.Node n){
         HashMap<Graph<Vertex>.Edge, Double> weight = getWeights(G);
-        HashMap<Graph<Vertex>.Node, Double> path = new HashMap<>();
-
+        HashMap<Graph<Vertex>.Node, Graph<Vertex>.Node> path = new HashMap<>();
+        HashMap<Graph<Vertex>.Node, Double> cost = new HashMap<>();
+        MinimumCostQueue Q = new MinimumCostQueue();
+        if(!G.vertexExist(n)){
+            return path;
+        }
+        path.put(n, n);
+        cost.put(n, 0.0);
+        Double maxValue = 100000.0;
+        for(Graph<Vertex>.Node node : G.getVertices()){
+            if(!node.equals(n)){
+                cost.put(node, maxValue);
+            }
+        }
+        Q.EnQueue(n, 0.0);
+        while(Q.size() > 0){
+            for(Graph<Vertex>.Edge edges : G.getEdges()){
+                if (cost.get(edges.getStartNode()) + weight.get(edges) < cost.get(edges.getEndNode())){
+                    try{
+                        path.put(edges.getStartNode(), edges.getEndNode());
+                        cost.replace(edges.getEndNode(), cost.get(edges.getEndNode()), cost.get(edges.getStartNode()) + weight.get(edges));
+                    }catch(Exception e){
+                        path.replace(edges.getStartNode(), path.get(edges.getStartNode()), edges.getEndNode());
+                        cost.replace(edges.getEndNode(), cost.get(edges.getEndNode()), cost.get(edges.getStartNode()) + weight.get(edges));
+                    }
+                    Q.EnQueue(edges.getEndNode(), cost.get(edges.getEndNode()));
+                }
+            }
+        }
+        return path;
     }
 
     

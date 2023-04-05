@@ -7,11 +7,13 @@
     <artifactId>2aa4.mesh</artifactId>
     <version>1.0</version>
   </parent>
+  
   <groupId>ca.mcmaster.pathfinder</groupId>
   <artifactId>pathfinder</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <name>pathfinder</name>
+  <version>1.0</version>
+  <name>McMaster :: CAS :: 2AA4 :: A4 :: Pathfinder</name>
   <url>http://maven.apache.org</url>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

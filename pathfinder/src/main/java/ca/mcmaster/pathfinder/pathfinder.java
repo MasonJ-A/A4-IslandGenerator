@@ -7,5 +7,5 @@ import ca.mcmaster.pathfinder.Graph.Graph;
 
 
 public interface pathfinder {
-    public HashMap<Graph<Vertex>.Node, Double> shortestPath(Graph<Vertex> G, Graph<Vertex>.Node N);
+    public HashMap<Graph<Vertex>.Node, Graph<Vertex>.Node> shortestPathDijksra(Graph<Vertex> G, Graph<Vertex>.Node n);
 }
