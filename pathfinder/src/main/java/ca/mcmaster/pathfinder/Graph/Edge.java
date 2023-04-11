@@ -4,12 +4,12 @@ import java.util.List;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 
-public class Edge{
-    private Node nstart;
-    private Node nend;
+public class Edge<N>{
+    private N nstart;
+    private N nend;
 
     private List<Property> propertiesList;
-    Edge(Node nstart, Node nend){
+    Edge(N nstart, N nend){
         this.nstart = nstart;
         this.nend = nend;
     }
@@ -19,13 +19,13 @@ public class Edge{
     public List<Property> getPropertiesList(){
         return propertiesList;
     }
-    public Node getStartNode(){
-        return this.nstart;
+    public N getStartNode(){
+        return nstart;
     }
-    public Node getEndNode(){
-        return this.nend;
+    public N getEndNode(){
+        return nend;
     }
-    public boolean equals(Edge e){
+    public boolean equals(Edge<N> e){
         return(nstart.equals(e.getStartNode()) && nend.equals(e.getEndNode()));
     }
 

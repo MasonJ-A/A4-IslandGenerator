@@ -11,14 +11,14 @@ import ca.mcmaster.pathfinder.pathfinder;
 
 public class GraphPathfinder implements pathfinder{
 
-    public HashMap<Edge, Double> getWeights(Graph G){
-        HashMap<Edge, Double> weightMap = new HashMap<>();
-        List<Edge> edges = G.getEdges();
+    public HashMap<Edge<Node>, Double> getWeights(Graph<Node> G){
+        HashMap<Edge<Node>, Double> weightMap = new HashMap<>();
+        List<Edge<Node>> edges = G.getEdges();
         Double sx;
         Double sy;
         Double ex;
         Double ey;
-        for(Edge e : edges){
+        for(Edge<Node> e : edges){
             sx = e.getStartNode().getX();
             sy = e.getStartNode().getY();
             ex = e.getEndNode().getX();
@@ -28,13 +28,13 @@ public class GraphPathfinder implements pathfinder{
         return weightMap;
     }
     @Override
-    public HashMap<Node, Node> shortestPathDijksra(Graph G, Node n){
+    public HashMap<Node, Node> shortestPathDijksra(Graph<Node> G, Node n){
         HashMap<Node, Node> shortestPath = new HashMap<>();
         HashMap<Node, Double> distance = new HashMap<>();
         HashMap<Node, Boolean> visited = new HashMap<>();
-        HashMap<Edge, Double> weightMap = getWeights(G);
+        HashMap<Edge<Node>, Double> weightMap = getWeights(G);
         List<Node> vertices = G.getVertices();
-        List<Edge> edges = G.getEdges();
+        List<Edge<Node>> edges = G.getEdges();
         for(Node v : vertices){
             distance.put(v, Double.MAX_VALUE);
             visited.put(v, false);
@@ -43,7 +43,7 @@ public class GraphPathfinder implements pathfinder{
         for(int i = 0; i < vertices.size(); i++){
             Node u = minDistance(distance, visited);
             visited.put(u, true);
-            for(Edge e : edges){
+            for(Edge<Node> e : edges){
                 if(e.getStartNode().equals(u)){
                     Node v = e.getEndNode();
                     if(!visited.get(v)){

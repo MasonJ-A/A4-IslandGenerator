@@ -7,7 +7,7 @@ import java.util.List;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 
 public class PathPrinter {
-    public void print(Graph G, Node n, Node m){
+    public void print(Graph <Node>G, Node n, Node m){
         GraphPathfinder graphPathfinder = new GraphPathfinder();
 
         HashMap<Node, Node> path = graphPathfinder.shortestPathDijksra(G, n);
