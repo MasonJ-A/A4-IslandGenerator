@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ca.mcmaster.pathfinder.Graph.Edge;
 import ca.mcmaster.pathfinder.Graph.Graph;
 import ca.mcmaster.pathfinder.Graph.Node;
 
