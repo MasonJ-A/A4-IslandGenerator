@@ -14,14 +14,14 @@ public class Main
     public static void main( String[] args )
     {
         PathPrinter PP = new PathPrinter();
-        Graph graph = new Graph();
+        Graph<Node> graph = new Graph<>();
         Node node1 = new Node(10.0,15.0);
         Node node2 = new Node(35.0,15.0);
         graph.addEdge(node1, node2);
         Node node3 = new Node(85.0, 105.0);
         graph.addEdge(node2, node3);
         Node node4 = new Node(17.0, 157.0);
-        //graph.addEdge(node3, node4);
+        graph.addEdge(node3, node4);
         Node node5 = new Node(12.0, 15.0);
         graph.addEdge(node3, node5);
         graph.addEdge(node5, node4);
