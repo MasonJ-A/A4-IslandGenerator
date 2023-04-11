@@ -4,8 +4,9 @@ import java.util.HashMap;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.pathfinder.Graph.Graph;
+import ca.mcmaster.pathfinder.Graph.Node;
 
 
 public interface pathfinder {
-    public HashMap<Graph<Vertex>.Node, Graph<Vertex>.Node> shortestPathDijksra(Graph<Vertex> G, Graph<Vertex>.Node n);
+    public HashMap<Node, Node> shortestPathDijksra(Graph G, Node n);
 }

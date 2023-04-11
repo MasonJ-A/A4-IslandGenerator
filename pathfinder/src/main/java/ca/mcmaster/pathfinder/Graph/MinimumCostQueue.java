@@ -6,24 +6,25 @@ import java.util.HashMap;
 
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
-import ca.mcmaster.pathfinder.Graph.Graph.Node;
+import ca.mcmaster.pathfinder.Graph.Node;
+import ca.mcmaster.pathfinder.Graph.Graph;
 
 public class MinimumCostQueue {
-    private static HashMap<Graph<Vertex>.Node, Double> queueMap;
-    private static ArrayList<Graph<Vertex>.Node> queue;
+    private static HashMap<Node, Double> queueMap;
+    private static ArrayList<Node> queue;
     MinimumCostQueue(){
         queue = new ArrayList<>();
         queueMap = new HashMap<>();
     }
-    public void EnQueue(Graph<Vertex>.Node n, Double cost){
+    public void EnQueue(Node n, Double cost){
         if(queue.isEmpty()){
             queue.add(n);
             return;
         }
         queueMap.put(n, cost);
         int i = 0;
-        Graph<Vertex>.Node temp = n;
-        for(Graph<Vertex>.Node key : queue){
+        Node temp = n;
+        for(Node key : queue){
             if(queueMap.get(key)> cost){
                 temp = queue.set(i, n);
                 break;
@@ -37,7 +38,7 @@ public class MinimumCostQueue {
             }
             queue.add(temp);
     }
-    public Graph<Vertex>.Node DeQueue(){
+    public Node DeQueue(){
         return queue.get(0);
     }
     public int size(){

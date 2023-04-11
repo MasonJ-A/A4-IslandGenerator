@@ -7,64 +7,24 @@ import java.util.List;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.pathfinder.pathfinder;
 
-public abstract class Graph<V> {
+public class Graph {
 
-    public class Node{
-        private V vertex;
-        private List<Property> propertiesList;
-        Node(V v){
-            this.vertex = v;
-            this.propertiesList = new ArrayList<>();
-        }
-        public void addProperty(Property p){
-            propertiesList.add(p);
-        }
-        public List<Property> getPropertiesList(){
-            return propertiesList;
-        }
-        public V getVertex(){
-            return vertex;
-        }
-        
-        public boolean equals(Node n){
-            return vertex.equals(n.getVertex());
-        }
+    
+
+    
+    protected ArrayList<Node> vertices;
+    protected ArrayList<Edge> edges; 
+    public Graph(){
+        vertices = new ArrayList<>();
+        edges = new ArrayList<>();
     }
-
-    public class Edge{
-        private Node nstart;
-        private Node nend;
-
-        private List<Property> propertiesList;
-        Edge(Node nstart, Node nend){
-            this.nstart = nstart;
-            this.nend = nend;
-        }
-        public void addProperty(Property p){
-            propertiesList.add(p);
-        }
-        public List<Property> getPropertiesList(){
-            return propertiesList;
-        }
-        public Node getStartNode(){
-            return nstart;
-        }
-        public Node getEndNode(){
-            return nend;
-        }
-        public boolean equals(Edge e){
-            return(nstart.equals(e.getStartNode()) && nend.equals(e.getEndNode()));
-        }
-
-    }
-
-    protected ArrayList<Node> vertices = new ArrayList<>();
-    protected ArrayList<Edge> edges = new ArrayList<>();
     public void addVertex(Node n){
         vertices.add(n);
     }
     public void addEdge(Edge e){
         edges.add(e);
+        vertices.add(e.getStartNode());
+        vertices.add(e.getEndNode());
     }
     public List<Node> getVertices(){
         return vertices;
@@ -72,8 +32,19 @@ public abstract class Graph<V> {
     public List<Edge> getEdges(){
         return edges;
     }
+    public List<Edge> getEdges(Node n){
+        List<Edge> tempedges = new ArrayList<>();
+        for(Edge e : this.edges){
+            if(e.getStartNode().equals(n) || e.getEndNode().equals(n)){
+                tempedges.add(e);
+            }
+        }
+        return tempedges;
+    }
     public void addEdge(Node nstart, Node nend){
         edges.add(new Edge(nstart, nend));
+        vertices.add(nstart);
+        vertices.add(nend);
     }
     public Node getVertex(int i){
         return vertices.get(i);
