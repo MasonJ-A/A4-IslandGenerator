@@ -17,15 +17,16 @@ public class CityGenerator implements Generator{
     public Mesh generate(Mesh m) {
         TileProperty tileProperty = new TileProperty();
         ArrayList<Polygon> polygons = new ArrayList<>();
+        List<Polygon> oldPolygons = m.getPolygonsList();
         Random rand = new Random();
         Optional<String> tile;
         Property propCity;
-        Property color;
-        for (Polygon p : m.getPolygonsList()) {
+        Property color = Property.newBuilder().setKey("rgb_color").setValue("128,125,120").build();
+        for (Polygon p : oldPolygons) {
             tile = tileProperty.extract(p.getPropertiesList());
             if(tile.isPresent() && tile.get().equals("landTile") && rand.nextInt(m.getPolygonsCount())%20 == 0){
                 propCity = Property.newBuilder().setKey("city").setValue(String.valueOf(true)).build();
-                color = Property.newBuilder().setKey("rgb_color").setValue("128,125,120").build();
+                
                 polygons.add(Polygon.newBuilder(p).addProperties(propCity).addProperties(color).build());
             }else{
                 propCity = Property.newBuilder().setKey("city").setValue(String.valueOf(false)).build();

@@ -70,12 +70,13 @@ public class RoadGenerator implements Generator{
             }
             
         }
-        Mesh centroidmesh = Mesh.newBuilder().addAllVertices(centroids).addAllSegments(centroidsegments).build();
+        Mesh centroidmesh = Mesh.newBuilder().addAllVertices(vertices).addAllSegments(centroidsegments).build();
         HashMap<Vertex, List<Vertex>> paths = new HashMap<>();
         Vertex c = cities.get(0);
+        HashMap<Vertex, Vertex> shortestPaths = meshPathfinder.shortestPathDijksra(centroidmesh, c);
         for(Vertex n : cities){
             if(!n.equals(c)){
-                List<Vertex> path = meshPathfinder.shortestPath(centroidmesh, n, c);
+                List<Vertex> path = meshPathfinder.shortestPath(shortestPaths,n, c);
                 paths.put(n, path);
             }
         }
@@ -95,10 +96,11 @@ public class RoadGenerator implements Generator{
             road1 = roadProperty.extract(v1.getPropertiesList());
             road2 = roadProperty.extract(v2.getPropertiesList());
             if(road1.isPresent() && road2.isPresent() && road1.get() && road2.get()){
+                //System.out.printf("(%.2f, %.2f) -> (%.2f, %.2f)\n", v1.getX(), v1.getY(),v2.getX(), v2.getY() );
                 segments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).addProperties(roadprop).build());
             }
         }
-        return Mesh.newBuilder(m).addAllPolygons(polygons).addAllVertices(vertices).addAllSegments(segments).build();
+        return Mesh.newBuilder().addAllVertices(vertices).addAllSegments(segments).addAllPolygons(polygons).build();
     }
     
     

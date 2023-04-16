@@ -50,18 +50,22 @@ public class MeshPathfinder implements pathfinder{
         }
         distance.put(n, 0.0);
         for(int i = 0; i < vertices.size(); i++){
+            
             Vertex minNode = minDistance(distance, visited);
             visited.put(minNode, true);
             for(Segment s : segments){
                 if(s.getV1Idx() == vertices.indexOf(minNode)){
+                    
                     Vertex v = vertices.get(s.getV2Idx());
                     Double weight = WieghtCalculator(m, s);
                     if(!visited.get(v) && distance.get(minNode) + weight < distance.get(v)){
+                        
                         distance.put(v, distance.get(minNode) + weight);
                         shortestPath.put(v, minNode);
                     }
                 }
                 if(s.getV2Idx() == vertices.indexOf(minNode)){
+                    
                     Vertex v = vertices.get(s.getV1Idx());
                     Double weight = WieghtCalculator(m, s);
                     if(!visited.get(v) && distance.get(minNode) + weight < distance.get(v)){
@@ -71,6 +75,7 @@ public class MeshPathfinder implements pathfinder{
                 }
             }
         }
+        
         return shortestPath;
     }
     public Vertex minDistance(HashMap<Vertex, Double> distance, HashMap<Vertex, Boolean> visited){
@@ -85,15 +90,17 @@ public class MeshPathfinder implements pathfinder{
         return minNode;
     }
     //find the shortest path from a vertex to another vertex
-    public List<Vertex> shortestPath(Mesh m, Vertex n, Vertex v){
-        HashMap<Vertex, Vertex> shortestPath = shortestPathDijksra(m, n);
+    public List<Vertex> shortestPath(HashMap<Vertex, Vertex> shortestPath, Vertex v, Vertex n){
         List<Vertex> path = new ArrayList<>();
+        System.out.printf("(%.2f , %.2f) -> (%.2f , %.2f):\n",v.getX(), v.getY(),n.getX(), n.getY());
         Vertex current = v;
         while(!Objects.isNull(shortestPath.get(current))){
+            System.out.printf("(%.2f , %.2f)\n",current.getX(), current.getY());
             path.add(current);
             current = shortestPath.get(current);
         }
         path.add(n);
+        System.out.printf("(%.2f , %.2f)\n\n",n.getX(), n.getY());
         return path;
     }
 

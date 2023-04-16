@@ -49,6 +49,7 @@ public class GraphicRenderer implements Renderer {
         NumOfRiversProperty numRivers = new NumOfRiversProperty();
         
         for (Structs.Segment ss : m.getSegmentsList()) {
+            
             if(ifRiver.extract(ss.getPropertiesList()).isPresent()){
                 if (ifRiver.extract(ss.getPropertiesList()).get().equals("true")) {
                     int thickness = Integer.parseInt(numRivers.extract(ss.getPropertiesList()).get());
@@ -60,11 +61,15 @@ public class GraphicRenderer implements Renderer {
     }
     private void roadSegments(Mesh m, Graphics2D canvas){
         RoadProperty roadProperty = new RoadProperty();
-        Color roadColor = new Color(128,125,120);
+        Color roadColor = new Color(255,255,255);
         Optional<Boolean> road;
         for(Segment s : m.getSegmentsList()){
             road = roadProperty.extract(s.getPropertiesList());
+            Vertex v = m.getVerticesList().get(s.getV1Idx());
+            Vertex n = m.getVerticesList().get(s.getV2Idx());
+            System.out.printf("(%.2f , %.2f) -> (%.2f , %.2f):\n",v.getX(), v.getY(),n.getX(), n.getY());
             if(road.isPresent() && road.get()){
+                
                 drawSegment(s, m, canvas, roadColor, 1);
             }
         }
