@@ -11,6 +11,7 @@ import ca.mcmaster.pathfinder.properties.CityProperty;
 
 public class CitySize {
     public Mesh setCitySize(Mesh m, String size){
+        size = size.trim();
         Integer i;
         if(size.equals("medium")){
             i = 2;

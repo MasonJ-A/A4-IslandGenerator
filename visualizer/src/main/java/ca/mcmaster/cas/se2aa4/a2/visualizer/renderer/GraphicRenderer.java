@@ -67,7 +67,6 @@ public class GraphicRenderer implements Renderer {
             road = roadProperty.extract(s.getPropertiesList());
             Vertex v = m.getVerticesList().get(s.getV1Idx());
             Vertex n = m.getVerticesList().get(s.getV2Idx());
-            System.out.printf("(%.2f , %.2f) -> (%.2f , %.2f):\n",v.getX(), v.getY(),n.getX(), n.getY());
             if(road.isPresent() && road.get()){
                 
                 drawSegment(s, m, canvas, roadColor, 1);

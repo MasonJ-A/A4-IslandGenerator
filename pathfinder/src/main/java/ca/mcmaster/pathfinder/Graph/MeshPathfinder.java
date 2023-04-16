@@ -92,15 +92,12 @@ public class MeshPathfinder implements pathfinder{
     //find the shortest path from a vertex to another vertex
     public List<Vertex> shortestPath(HashMap<Vertex, Vertex> shortestPath, Vertex v, Vertex n){
         List<Vertex> path = new ArrayList<>();
-        System.out.printf("(%.2f , %.2f) -> (%.2f , %.2f):\n",v.getX(), v.getY(),n.getX(), n.getY());
         Vertex current = v;
         while(!Objects.isNull(shortestPath.get(current))){
-            System.out.printf("(%.2f , %.2f)\n",current.getX(), current.getY());
             path.add(current);
             current = shortestPath.get(current);
         }
         path.add(n);
-        System.out.printf("(%.2f , %.2f)\n\n",n.getX(), n.getY());
         return path;
     }
 

@@ -11,21 +11,18 @@ import ca.mcmaster.pathfinder.properties.CityProperty;
 public class FindMiddleCity {
     private Double max_y;
     private Double max_x;
-    public Vertex middle(Mesh m){
-        List<Vertex> vertices = m.getVerticesList();
+    public Vertex middle(Mesh m, List<Vertex> cities){
         MeshSize size = new MeshSize(m);
         max_x = size.getMaxX();
         max_y = size.getMaxY();
         Double mid_x = max_x/2;
         Double mid_y = max_y/2;
         distance distance = new distance();
-        Vertex centerVertex = vertices.get(0);
+        Vertex centerVertex = cities.get(0);
         Double minDistance = Double.MAX_VALUE;
-        CityProperty cityProperty = new CityProperty();
         
-        for(Vertex v : vertices){
-            Optional<Boolean> cityProp = cityProperty.extract(v.getPropertiesList());
-            if (cityProp.isPresent() && cityProp.get() && distance.centerDistance(v, mid_x, mid_y)< minDistance){
+        for(Vertex v : cities){
+            if (distance.centerDistance(v, mid_x, mid_y)<= minDistance){
                 minDistance = distance.centerDistance(v, mid_x, mid_y);
                 centerVertex = v;
             }

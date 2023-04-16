@@ -23,7 +23,7 @@ public class Main
         RoadGenerator roadGenerator = new RoadGenerator();
         CitySize citySize = new CitySize();
 
-        Structs.Mesh finalMesh = citySize.setCitySize(roadGenerator.generate(cityGenerator.generate(aMesh)), "medium");
+        Structs.Mesh finalMesh = citySize.setCitySize(roadGenerator.generate(cityGenerator.generate(aMesh, config), config), config.size());
         new MeshFactory().write(finalMesh, config.output());
     }
 }

@@ -14,6 +14,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.pathfinder.Generator;
 import ca.mcmaster.pathfinder.pathfinder;
+import ca.mcmaster.pathfinder.Configuration.Configuration;
 import ca.mcmaster.pathfinder.Graph.MeshPathfinder;
 import ca.mcmaster.pathfinder.properties.CityProperty;
 import ca.mcmaster.pathfinder.properties.RoadProperty;
@@ -24,7 +25,7 @@ import ca.mcmaster.pathfinder.properties.TileProperty;
 public class RoadGenerator implements Generator{
 
     @Override
-    public Mesh generate(Mesh m) {
+    public Mesh generate(Mesh m, Configuration config) {
         MeshPathfinder meshPathfinder = new MeshPathfinder();
         ArrayList<Vertex> vertices = new ArrayList<>(m.getVerticesList());
         ArrayList<Segment> segments = new ArrayList<>(m.getSegmentsList());
@@ -33,6 +34,7 @@ public class RoadGenerator implements Generator{
         ArrayList<Vertex> cities = new ArrayList<>();
         CityProperty cityProperty = new CityProperty();
         TileProperty tileProperty = new TileProperty();
+        FindMiddleCity middleCity = new FindMiddleCity();
         Optional<Boolean> city;
         Optional<String> tile;
         for(Polygon p : polygons){
@@ -72,7 +74,7 @@ public class RoadGenerator implements Generator{
         }
         Mesh centroidmesh = Mesh.newBuilder().addAllVertices(vertices).addAllSegments(centroidsegments).build();
         HashMap<Vertex, List<Vertex>> paths = new HashMap<>();
-        Vertex c = cities.get(0);
+        Vertex c = middleCity.middle(m, cities);
         HashMap<Vertex, Vertex> shortestPaths = meshPathfinder.shortestPathDijksra(centroidmesh, c);
         for(Vertex n : cities){
             if(!n.equals(c)){
@@ -96,7 +98,6 @@ public class RoadGenerator implements Generator{
             road1 = roadProperty.extract(v1.getPropertiesList());
             road2 = roadProperty.extract(v2.getPropertiesList());
             if(road1.isPresent() && road2.isPresent() && road1.get() && road2.get()){
-                //System.out.printf("(%.2f, %.2f) -> (%.2f, %.2f)\n", v1.getX(), v1.getY(),v2.getX(), v2.getY() );
                 segments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).addProperties(roadprop).build());
             }
         }

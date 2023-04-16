@@ -6,6 +6,8 @@ public class Configuration {
 
     public static final String OUTPUT = "o";
     public static final String INPUT = "i";
+    public static final String SIZE = "size";
+    public static final String CITYNUM = "cityNum";
 
 
 
@@ -30,6 +32,12 @@ public class Configuration {
     public String output() {
         return this.cli.getOptionValue(OUTPUT, "output.svg");
     }
+    public String size() {
+        return this.cli.getOptionValue(SIZE, "small");
+    }
+    public String cityNum() {
+        return this.cli.getOptionValue(CITYNUM, "5");
+    }
 
 
 
@@ -37,6 +45,8 @@ public class Configuration {
         Options options = new Options();
         options.addOption(new Option(INPUT, true, "Input file (SVG)"));
         options.addOption(new Option(OUTPUT, true, "Output file (MESH)"));
+        options.addOption(new Option(SIZE, true, "City sizes, \'small\', \'medium\', or \'large\'"));
+        options.addOption(new Option(CITYNUM, true, "Number of cities"));
         return options;
     }
 
