@@ -6,12 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.mcmaster.pathfinder.Graph.Graph;
 import ca.mcmaster.pathfinder.Graph.Node;
-
-/**
- * Unit test for simple App.
- */
-public class AppTest
-{
+public class EqualsTest {
     @Test
     public void testequals()
     {
