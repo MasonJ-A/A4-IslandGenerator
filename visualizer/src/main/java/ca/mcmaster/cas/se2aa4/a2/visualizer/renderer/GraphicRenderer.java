@@ -3,9 +3,11 @@ package ca.mcmaster.cas.se2aa4.a2.visualizer.renderer;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.ColorProperty;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.NumOfRiversProperty;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.RoadProperty;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.riverProperty;
 
 import java.awt.Graphics2D;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.apache.batik.ext.awt.image.codec.png.PNGEncodeParam.RGB;
 
@@ -32,6 +36,7 @@ public class GraphicRenderer implements Renderer {
         canvas.setStroke(stroke);
         drawPolygons(aMesh, canvas);
         riverSegments(aMesh, canvas);
+        roadSegments(aMesh, canvas);
         
     }
     
@@ -44,6 +49,7 @@ public class GraphicRenderer implements Renderer {
         NumOfRiversProperty numRivers = new NumOfRiversProperty();
         
         for (Structs.Segment ss : m.getSegmentsList()) {
+            
             if(ifRiver.extract(ss.getPropertiesList()).isPresent()){
                 if (ifRiver.extract(ss.getPropertiesList()).get().equals("true")) {
                     int thickness = Integer.parseInt(numRivers.extract(ss.getPropertiesList()).get());
@@ -53,7 +59,20 @@ public class GraphicRenderer implements Renderer {
         }
         
     }
-    
+    private void roadSegments(Mesh m, Graphics2D canvas){
+        RoadProperty roadProperty = new RoadProperty();
+        Color roadColor = new Color(255,255,255);
+        Optional<Boolean> road;
+        for(Segment s : m.getSegmentsList()){
+            road = roadProperty.extract(s.getPropertiesList());
+            Vertex v = m.getVerticesList().get(s.getV1Idx());
+            Vertex n = m.getVerticesList().get(s.getV2Idx());
+            if(road.isPresent() && road.get()){
+                
+                drawSegment(s, m, canvas, roadColor, 1);
+            }
+        }
+    }
     private void drawSegment(Structs.Segment segment, Mesh m, Graphics2D canvas, Color color, int thickness) {
         Structs.Vertex v1 = m.getVertices(segment.getV1Idx());
         Structs.Vertex v2 = m.getVertices(segment.getV2Idx());

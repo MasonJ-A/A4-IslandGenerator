@@ -4,7 +4,9 @@ package ca.mcmaster.pathfinder.Graph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.pathfinder.pathfinder;
 
@@ -27,7 +29,7 @@ public class GraphPathfinder implements pathfinder{
         }
         return weightMap;
     }
-    @Override
+
     public HashMap<Node, Node> shortestPathDijksra(Graph<Node> G, Node n){
         HashMap<Node, Node> shortestPath = new HashMap<>();
         HashMap<Node, Double> distance = new HashMap<>();
@@ -62,11 +64,25 @@ public class GraphPathfinder implements pathfinder{
         Double min = Double.MAX_VALUE;
         Node minNode = null;
         for(Node n : distance.keySet()){
-            if(!visited.get(n) && distance.get(n) <= min){
+            if(!Objects.isNull(visited.get(n)) && !Objects.isNull(distance.get(n)) && !visited.get(n) && distance.get(n) <= min){
                 min = distance.get(n);
                 minNode = n;
             }
         }
         return minNode;
     }
+
+    public List<Node> shortestPath(Graph<Node> G, Node start, Node end){
+        HashMap<Node, Node> shortestPath = shortestPathDijksra(G, start);
+        List<Node> path = new ArrayList<>();
+        Node current = end;
+        while(!Objects.isNull(current) && !current.equals(start)){
+            path.add(current);
+            current = shortestPath.get(current);
+        }
+        path.add(start);
+        return path;
+    }
+
+
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.island.neighborCheck;
 import ca.mcmaster.island.Configuration.Configuration;
 import ca.mcmaster.island.SoilAbsorption.AssignSoilPercipitation;
@@ -61,6 +62,7 @@ public class whittakerGen {
 
         
         ArrayList<Polygon> polygons = new ArrayList<>();
+        Property hieghtprop;
         for (Structs.Polygon p : newMesh2.getPolygonsList()) {
             Optional<String> tile = tileProperty.extract(p.getPropertiesList());
             Optional<String> hieght = elevationProperty.extract(p.getPropertiesList());
@@ -68,15 +70,16 @@ public class whittakerGen {
             Optional<Double> temperatureProp = temperatureProperty.extract(p.getPropertiesList());
             if(tile.isPresent() && hieght.isPresent() && percipitationProp.isPresent() && temperatureProp.isPresent()){
                 int h = (int)Double.parseDouble(hieght.get());
+                hieghtprop = Property.newBuilder().setKey("elevation").setValue(String.valueOf(h)).build();
                 temperature = temperatureProp.get();
                 percipitation = percipitationProp.get();
                 if(tile.get().equals(land.getTileProperty().getValue())){
                     switch(compareP(percipitation, h, radius)){
-                        case "tropical": polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(rainforest.getColor(temperature)).build());break;
-                        case "dry" : polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(field.getColor(temperature)).build());break; 
-                        case "mountain":polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(mountain.getColor(temperature)).build());break;
-                        case "canyon":polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(canyon.getColor(h,temperature, radius)).build());break;
-                        default:polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(forest.getColor(temperature)).build());break;
+                        case "tropical": polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(rainforest.getColor(temperature)).addProperties(hieghtprop).build());break;
+                        case "dry" : polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(field.getColor(temperature)).addProperties(hieghtprop).build());break; 
+                        case "mountain":polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(mountain.getColor(temperature)).addProperties(hieghtprop).build());break;
+                        case "canyon":polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(canyon.getColor(h,temperature, radius)).addProperties(hieghtprop).build());break;
+                        default:polygons.add(Structs.Polygon.newBuilder(p).addProperties(land.getTileProperty()).addProperties(forest.getColor(temperature)).addProperties(hieghtprop).build());break;
                     } 
                 }else{
                     polygons.add(p);
