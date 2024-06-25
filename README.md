@@ -4,7 +4,8 @@
 mvn install
 java -jar generator/generator.jar -k irregular -h 500 -w 500 -p 1000 -s 20 -o img/test.mesh
 java -jar island/island.jar -o img/test2.mesh -i img/test.mesh
-java -jar visualizer/visualizer.jar -i img/test2.mesh -o img/test3.svg
+java -jar pathfinder/pathfinder.jar -o img/test3.mesh -i img/test2.mesh
+java -jar visualizer/visualizer.jar -i img/test3.mesh -o img/test4.svg
  
 
 ## Backlog
